@@ -8,4 +8,6 @@
 - (void) sendString:(NSString*)text;
 - (void) sendData:(NSData*)data;
 
+- (void) printStats;
+
 @end

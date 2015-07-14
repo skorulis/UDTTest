@@ -20,6 +20,7 @@ static const int kUDTBufferSize = 65536;
 - (instancetype) initWithSocket:(UDTSOCKET*)recver {
     self = [super init];
     _recver = recver;
+    setSocketParams(_recver);
     _receiveThread = [[NSThread alloc] initWithTarget:self selector:@selector(handleData) object:nil];
     [_receiveThread start];
     return self;
@@ -42,6 +43,12 @@ static const int kUDTBufferSize = 65536;
             
             NSData* chunk = [NSData dataWithBytes:(const void*)buffer length:rs];
             [self onReceive:chunk];
+            
+            UDT::TRACEINFO info;
+            UDT::perfmon(*_recver, &info);
+            
+            //NSLog(@"RECV %d %lld %lld",info.pktRcvLossTotal, info.pktRecvTotal,info.pktSentTotal);
+            //NSLog(@"RTT %f / %f",info.mbpsSendRate,info.mbpsRecvRate);
         }
     }
     
@@ -50,7 +57,7 @@ static const int kUDTBufferSize = 65536;
 }
 
 - (void) onReceive:(NSData*)chunk {
-    NSLog(@"Got data %d",(int)chunk.length);
+    //NSLog(@"Got data %d",(int)chunk.length);
     if(self.recvModel) {
         [self.recvModel didReceive:chunk];
     } else {

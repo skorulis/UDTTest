@@ -77,15 +77,14 @@
                 NSParameterAssert(_sendQueue.count > 0);
                 send = _sendQueue[0];
             }
+            UDT::TRACEINFO info;
+            UDT::perfmon(_client, &info);
             
-            int bufferFill; int size;
-
-            UDT::getsockopt(_client, 0, UDT_SNDDATA, &bufferFill, &size);
-            NSLog(@"SEND BUFFER %d : %d",bufferFill,size);
-            
+            NSLog(@"In flight %d",info.pktFlightSize);
             
             NSData* chunk = [send nextChunk:kUDTChunkSize];
             int ss = UDT::send(_client, (char*)chunk.bytes, (int)chunk.length, 0);
+            NSParameterAssert(ss == chunk.length);
             
             if (UDT::ERROR == ss) {
                 NSLog(@"send: %s", UDT::getlasterror().getErrorMessage());
@@ -98,9 +97,18 @@
                     }
                 }
             }
-            [NSThread sleepForTimeInterval:0.01];
             
         }
+    }
+}
+
+- (void) printStats {
+    UDT::TRACEINFO info;
+    UDT::perfmon(_client, &info);
+    if(info.pktFlightSize > 0) {
+        NSLog(@"SEND %d %f : %f",info.pktFlightSize,info.mbpsSendRate,info.msRTT);
+        NSLog(@"SEND %lld - %d",info.pktSentTotal,info.pktSndLossTotal);
+        
     }
 }
 

@@ -40,16 +40,24 @@
 }
 
 - (void) openSocket:(id)sender {
+    if(self.receiver) {
+        return;
+    }
     self.receiver = [[UDTReceiver alloc] init];
     self.receiver.delegate = self;
 }
 
 - (void) connectClient:(id)seender {
-    self.sender = [[UDTSender alloc] init];
+    if(!self.sender) {
+        self.sender = [[UDTSender alloc] init];
+    }
+    
     UIImage* image = [UIImage imageNamed:@"IMG_0646.JPG"];
     NSData* imageData = UIImageJPEGRepresentation(image, 1);
     NSLog(@"Image %@",image);
     [self.sender sendData:imageData];
+    
+    [NSTimer scheduledTimerWithTimeInterval:0.05 target:self.sender selector:@selector(printStats) userInfo:nil repeats:true];
 }
 
 #pragma mark DataBlobConnectionDelegate
