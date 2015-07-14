@@ -2,17 +2,23 @@
 //  Copyright (c) 2015 com.skorulis. All rights reserved.
 
 #import "UDTSender.h"
+#import "UDTFileSend.h"
 #include "udt.h"
 #include <netdb.h>
 #include <unistd.h>
 #include <cstdlib>
 #include <cstring>
 
+static const int kSendChunkSize = 65536;
+
 @interface UDTSender () {
     UDTSOCKET _client;
+    NSMutableArray* _sendQueue;
+    NSCondition* _sendCondition;
 }
 
-
+@property NSThread* sendThread;
+@property BOOL sendActive;
 
 @end
 
@@ -21,6 +27,9 @@
 - (instancetype) init {
     self = [super init];
     [self start];
+    _sendQueue = [[NSMutableArray alloc] init];
+    _sendCondition = [[NSCondition alloc] init];
+    self.sendThread = [[NSThread alloc] initWithTarget:self selector:@selector(runSend) object:nil];
     return self;
 }
 
@@ -53,18 +62,57 @@
     }
     
     freeaddrinfo(peer);
-    
-    
+}
+
+- (void) runSend {
+    while (![[NSThread currentThread] isCancelled]) {
+        @autoreleasepool {
+            [_sendCondition lock];
+            while(!self.sendActive) {
+                [_sendCondition wait];
+            }
+            [_sendCondition unlock];
+            UDTFileSend* send;
+            
+            @synchronized(_sendQueue) {
+                NSParameterAssert(_sendQueue.count > 0);
+                send = _sendQueue[0];
+            }
+            
+            NSData* chunk = [send nextChunk:kSendChunkSize];
+            int ss = UDT::send(_client, (char*)chunk.bytes, (int)chunk.length, 0);
+            
+            if (UDT::ERROR == ss) {
+                NSLog(@"send: %s", UDT::getlasterror().getErrorMessage());
+            }
+            if(send.isFinished) {
+                @synchronized(_sendQueue) {
+                    [_sendQueue removeObjectAtIndex:0];
+                    if(_sendQueue.count == 0) {
+                        self.sendActive = false;
+                    }
+                }
+            }
+            
+        }
+    }
 }
 
 - (void) sendString:(NSString*)text {
-    const char* data = [text UTF8String];
-    int len = strlen(data);
-    int ss;
-    
-    if (UDT::ERROR == (ss = UDT::send(_client, data, len, 0))) {
-        NSLog(@"send: %s", UDT::getlasterror().getErrorMessage());
+    NSData* data = [text dataUsingEncoding:NSUTF8StringEncoding];
+    [self sendData:data];
+}
+
+- (void) sendData:(NSData*)data {
+    UDTFileSend* send = [[UDTFileSend alloc] initWithData:data];
+    @synchronized(_sendQueue) {
+        [_sendQueue addObject:send];
+        self.sendActive = true;
     }
+    
+    [_sendCondition lock];
+    [_sendCondition signal];
+    [_sendCondition unlock];
 }
 
 @end

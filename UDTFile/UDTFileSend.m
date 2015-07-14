@@ -49,4 +49,8 @@
     
 }
 
+- (BOOL) isFinished {
+    return self.position >= _fileData.length;
+}
+
 @end

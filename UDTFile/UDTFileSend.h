@@ -11,4 +11,6 @@
 
 - (NSData*) nextChunk:(int)size;
 
+- (BOOL) isFinished;
+
 @end

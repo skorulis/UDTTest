@@ -22,12 +22,16 @@
     int i;
     [chunk1 getBytes: &i length: sizeof(i)];
     XCTAssertEqual(i, 100);
-    
+    XCTAssertEqual(send.isFinished, false);
     XCTAssertEqual(chunk1.length, 50);
+    
     NSData* chunk2 = [send nextChunk:50];
     XCTAssertEqual(chunk2.length, 50);
+    XCTAssertEqual(send.isFinished, false);
+    
     NSData* chunk3 = [send nextChunk:50];
     XCTAssertEqual(chunk3.length, 4);
+    XCTAssertEqual(send.isFinished, true);
 }
 
 @end

@@ -6,5 +6,6 @@
 @interface UDTSender : NSObject
 
 - (void) sendString:(NSString*)text;
+- (void) sendData:(NSData*)data;
 
 @end
