@@ -35,6 +35,7 @@
 		FA1F5FC11B5489550006452D /* UDTSender.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FBD1B5489550006452D /* UDTSender.mm */; };
 		FA1F5FC41B5489D70006452D /* RandomUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FC31B5489D70006452D /* RandomUtil.m */; };
 		FA1F5FC71B54AE480006452D /* UDTFileReceive.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FC61B54AE480006452D /* UDTFileReceive.m */; };
+		FA1F5FCA1B54B7670006452D /* UDTConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FC91B54B7670006452D /* UDTConnection.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,8 @@
 		FA1F5FC31B5489D70006452D /* RandomUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomUtil.m; sourceTree = "<group>"; };
 		FA1F5FC51B54AE480006452D /* UDTFileReceive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDTFileReceive.h; sourceTree = "<group>"; };
 		FA1F5FC61B54AE480006452D /* UDTFileReceive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UDTFileReceive.m; sourceTree = "<group>"; };
+		FA1F5FC81B54B7670006452D /* UDTConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDTConnection.h; sourceTree = "<group>"; };
+		FA1F5FC91B54B7670006452D /* UDTConnection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UDTConnection.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +271,8 @@
 				FA1F5FBD1B5489550006452D /* UDTSender.mm */,
 				FA1F5FC51B54AE480006452D /* UDTFileReceive.h */,
 				FA1F5FC61B54AE480006452D /* UDTFileReceive.m */,
+				FA1F5FC81B54B7670006452D /* UDTConnection.h */,
+				FA1F5FC91B54B7670006452D /* UDTConnection.mm */,
 			);
 			path = UDTFile;
 			sourceTree = SOURCE_ROOT;
@@ -452,6 +457,7 @@
 				FA1F5FA11B53C4160006452D /* common.cpp in Sources */,
 				FA1F5FC01B5489550006452D /* UDTReceiver.mm in Sources */,
 				FA1F5F9F1B53C4160006452D /* ccc.cpp in Sources */,
+				FA1F5FCA1B54B7670006452D /* UDTConnection.mm in Sources */,
 				FA1F5FA51B53C4160006452D /* md5.cpp in Sources */,
 				FA1F5FA01B53C4160006452D /* channel.cpp in Sources */,
 				FA1F5F9E1B53C4160006452D /* cache.cpp in Sources */,

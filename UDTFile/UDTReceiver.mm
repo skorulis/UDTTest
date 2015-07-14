@@ -2,6 +2,9 @@
 //  Copyright (c) 2015 com.skorulis. All rights reserved.
 
 #import "UDTReceiver.h"
+#import "UDTFileReceive.h"
+#import "UDTConstants.h"
+#import "UDTConnection.h"
 #include "udt.h"
 #include <netdb.h>
 #include <unistd.h>
@@ -11,6 +14,7 @@
 @interface UDTReceiver ()
 
 @property (nonatomic) NSThread* receiveThread;
+@property (nonatomic) NSMutableArray* connections;
 
 @end
 
@@ -18,6 +22,7 @@
 
 - (instancetype) init {
     self = [super init];
+    _connections = [[NSMutableArray alloc] init];
     _receiveThread = [[NSThread alloc] initWithTarget:self selector:@selector(startListening) object:nil];
     [_receiveThread start];
     return self;
@@ -74,54 +79,14 @@
         
         NSLog(@"new connection: %s %s",clienthost, clientservice);
 
-        pthread_t rcvthread;
-        pthread_create(&rcvthread, NULL, recvdata, new UDTSOCKET(recver));
-        pthread_detach(rcvthread);
-        
+        UDTConnection* conn = [[UDTConnection alloc] initWithSocket:new UDTSOCKET(recver)];
+        [self.connections addObject:conn];
     }
     
     UDT::close(serv);
 
 }
 
-void* recvdata(void* usocket) {
-    NSLog(@"RECV");
-    UDTSOCKET recver = *(UDTSOCKET*)usocket;
-    delete (UDTSOCKET*)usocket;
-    
-    char* data;
-    int size = 5;
-    data = new char[size];
-    
-    while (true) {
-        int rsize = 0;
-        int rs;
-        while (rsize < size) {
-            int rcv_size;
-            int var_size = sizeof(int);
-            UDT::getsockopt(recver, 0, UDT_RCVDATA, &rcv_size, &var_size);
-            rs = UDT::recv(recver, data, size, 0);
-            NSString* s = [[NSString alloc] initWithBytes:data length:rs encoding:NSUTF8StringEncoding];
-            NSLog(@"Packet %d %@",rs,s);
-            
-            if (UDT::ERROR == rs) {
-                NSLog(@"RECV: %s",UDT::getlasterror().getErrorMessage());
-                break;
-            }
-            
-            rsize += rs;
-        }
-        
-        if (rsize < size)
-            break;
-    }
-    
-    delete [] data;
-    
-    UDT::close(recver);
-    
-    return NULL;
-}
 
 
 @end

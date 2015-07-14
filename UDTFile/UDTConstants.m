@@ -4,3 +4,4 @@
 #import "UDTConstants.h"
 
 int const kUDTContentLengthSize = 4;
+const int kUDTChunkSize = 65536;

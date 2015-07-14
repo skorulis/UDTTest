@@ -9,8 +9,6 @@
 #include <cstdlib>
 #include <cstring>
 
-static const int kSendChunkSize = 65536;
-
 @interface UDTSender () {
     UDTSOCKET _client;
     NSMutableArray* _sendQueue;
@@ -30,6 +28,7 @@ static const int kSendChunkSize = 65536;
     _sendQueue = [[NSMutableArray alloc] init];
     _sendCondition = [[NSCondition alloc] init];
     self.sendThread = [[NSThread alloc] initWithTarget:self selector:@selector(runSend) object:nil];
+    [self.sendThread start];
     return self;
 }
 
@@ -79,7 +78,7 @@ static const int kSendChunkSize = 65536;
                 send = _sendQueue[0];
             }
             
-            NSData* chunk = [send nextChunk:kSendChunkSize];
+            NSData* chunk = [send nextChunk:kUDTChunkSize];
             int ss = UDT::send(_client, (char*)chunk.bytes, (int)chunk.length, 0);
             
             if (UDT::ERROR == ss) {
