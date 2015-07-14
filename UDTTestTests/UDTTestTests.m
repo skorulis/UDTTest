@@ -1,13 +1,11 @@
-//
-//  UDTTestTests.m
-//  UDTTestTests
-//
 //  Created by Alexander Skorulis on 13/07/2015.
 //  Copyright (c) 2015 com.skorulis. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "UDTFileSend.h"
+#import "RandomUtil.h"
+#import "UDTConstants.h"
 
 @interface UDTTestTests : XCTestCase
 
@@ -15,26 +13,21 @@
 
 @implementation UDTTestTests
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void) testFileSend1 {
+    NSData* data = [RandomUtil randomData:100];
+    UDTFileSend* send = [[UDTFileSend alloc] initWithData:data];
+    NSData* chunk1 = [send nextChunk:50];
+    
+    int i;
+    [chunk1 getBytes: &i length: sizeof(i)];
+    XCTAssertEqual(i, 100);
+    
+    XCTAssertEqual(chunk1.length, 50);
+    NSData* chunk2 = [send nextChunk:50];
+    XCTAssertEqual(chunk2.length, 50);
+    NSData* chunk3 = [send nextChunk:50];
+    XCTAssertEqual(chunk3.length, 4);
 }
 
 @end
