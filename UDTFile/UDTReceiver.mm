@@ -80,6 +80,7 @@
         NSLog(@"new connection: %s %s",clienthost, clientservice);
 
         UDTConnection* conn = [[UDTConnection alloc] initWithSocket:new UDTSOCKET(recver)];
+        conn.delegate = self.delegate;
         [self.connections addObject:conn];
     }
     

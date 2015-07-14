@@ -36,6 +36,7 @@
 		FA1F5FC41B5489D70006452D /* RandomUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FC31B5489D70006452D /* RandomUtil.m */; };
 		FA1F5FC71B54AE480006452D /* UDTFileReceive.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FC61B54AE480006452D /* UDTFileReceive.m */; };
 		FA1F5FCA1B54B7670006452D /* UDTConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FC91B54B7670006452D /* UDTConnection.mm */; };
+		FA1F5FCC1B54C37B0006452D /* IMG_0646.JPG in Resources */ = {isa = PBXBuildFile; fileRef = FA1F5FCB1B54C37B0006452D /* IMG_0646.JPG */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,8 @@
 		FA1F5FC61B54AE480006452D /* UDTFileReceive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UDTFileReceive.m; sourceTree = "<group>"; };
 		FA1F5FC81B54B7670006452D /* UDTConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDTConnection.h; sourceTree = "<group>"; };
 		FA1F5FC91B54B7670006452D /* UDTConnection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UDTConnection.mm; sourceTree = "<group>"; };
+		FA1F5FCB1B54C37B0006452D /* IMG_0646.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0646.JPG; sourceTree = "<group>"; };
+		FA1F5FCD1B54C4860006452D /* DataBlobConnectionProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBlobConnectionProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +157,7 @@
 		FA1F5F4D1B53C3F60006452D = {
 			isa = PBXGroup;
 			children = (
+				FA1F5FCB1B54C37B0006452D /* IMG_0646.JPG */,
 				FA1F5F581B53C3F60006452D /* UDTTest */,
 				FA1F5F721B53C3F60006452D /* UDTTestTests */,
 				FA1F5F571B53C3F60006452D /* Products */,
@@ -186,6 +190,7 @@
 				FA1F5F661B53C3F60006452D /* Images.xcassets */,
 				FA1F5F681B53C3F60006452D /* LaunchScreen.xib */,
 				FA1F5F591B53C3F60006452D /* Supporting Files */,
+				FA1F5FCD1B54C4860006452D /* DataBlobConnectionProtocol.h */,
 			);
 			path = UDTTest;
 			sourceTree = "<group>";
@@ -364,6 +369,7 @@
 				FA1F5F651B53C3F60006452D /* Main.storyboard in Resources */,
 				FA1F5F6A1B53C3F60006452D /* LaunchScreen.xib in Resources */,
 				FA1F5F671B53C3F60006452D /* Images.xcassets in Resources */,
+				FA1F5FCC1B54C37B0006452D /* IMG_0646.JPG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

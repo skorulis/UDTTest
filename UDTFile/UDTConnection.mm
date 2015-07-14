@@ -53,10 +53,25 @@
     
     if(self.recvModel.isFinished) {
         NSData* data = self.recvModel.getData;
+        NSData* extra = self.recvModel.extraData;
         self.recvModel = nil;
-        NSString* s = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"Got string %@",s);
+        [self.delegate dataBlobConnection:self receivedData:data];
+        if(extra) {
+            [self onReceive:extra];
+        }
     }
+}
+
+- (void) sendData:(NSData*)data {
+    
+}
+
+- (DataBlobConnectionType) connectionType {
+    return DataBlobConnectionTypeUDT;
+}
+
+- (NSInteger) maximumActiveTasks {
+    return 1;
 }
 
 @end

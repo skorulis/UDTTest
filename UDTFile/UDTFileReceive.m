@@ -17,7 +17,7 @@
     self = [super init];
     [chunk getBytes: &_contentSize length: sizeof(_contentSize)];
     _data = [[NSMutableData alloc] initWithCapacity:_contentSize];
-    [_data appendData:[chunk subdataWithRange:NSMakeRange(kUDTContentLengthSize, chunk.length - kUDTContentLengthSize)]];
+    [self didReceive:[chunk subdataWithRange:NSMakeRange(kUDTContentLengthSize, chunk.length - kUDTContentLengthSize)]];
     return self;
 }
 
@@ -30,7 +30,15 @@
 
 - (void) didReceive:(NSData*)chunk {
     NSParameterAssert(!self.isFinished);
-    [_data appendData:chunk];
+    int remaining = _contentSize - _data.length;
+    if(chunk.length > remaining) {
+        NSData* part1 = [chunk subdataWithRange:NSMakeRange(0, remaining)];
+        NSData* part2 = [chunk subdataWithRange:NSMakeRange(remaining, chunk.length - remaining)];
+        [_data appendData:part1];
+        _extraData = part2;
+    } else {
+        [_data appendData:chunk];
+    }
 }
 
 - (BOOL) isFinished {

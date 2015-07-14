@@ -5,6 +5,8 @@
 
 @interface UDTFileReceive : NSObject
 
+@property (nonatomic, readonly) NSData* extraData;
+
 - (instancetype) initWithInitialChunk:(NSData*)chunk;
 - (instancetype) initWithContentSize:(int)length;
 

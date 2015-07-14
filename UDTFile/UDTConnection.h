@@ -3,8 +3,11 @@
 
 #import <Foundation/Foundation.h>
 #import "udt.h"
+#import "DataBlobConnectionProtocol.h"
 
-@interface UDTConnection : NSObject
+@interface UDTConnection : NSObject <DataBlobConnectionProtocol>
+
+@property (nonatomic,weak) id<DataBlobConnectionDelegate> delegate;
 
 - (instancetype) initWithSocket:(UDTSOCKET*)recver;
 

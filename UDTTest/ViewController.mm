@@ -10,7 +10,7 @@
 #import "UDTReceiver.h"
 #import "UDTSender.h"
 
-@interface ViewController ()
+@interface ViewController () <DataBlobConnectionDelegate>
 
 @property (nonatomic) UDTReceiver* receiver;
 @property (nonatomic) UDTSender* sender;
@@ -41,12 +41,30 @@
 
 - (void) openSocket:(id)sender {
     self.receiver = [[UDTReceiver alloc] init];
+    self.receiver.delegate = self;
 }
 
 - (void) connectClient:(id)seender {
     self.sender = [[UDTSender alloc] init];
-    [self.sender sendString:@"TEST A"];
+    UIImage* image = [UIImage imageNamed:@"IMG_0646.JPG"];
+    NSData* imageData = UIImageJPEGRepresentation(image, 1);
+    NSLog(@"Image %@",image);
+    [self.sender sendData:imageData];
+    [self.sender sendData:imageData];
+    //[self.sender sendString:@"TEST A fsagfsodfgdsofg ouegf owgefo gwefougweoufgweou gfwouegfouwgfouewgfouwgfuowg"];
 }
 
+#pragma mark DataBlobConnectionDelegate
+
+- (void)dataBlobConnection:(id<DataBlobConnectionProtocol>)conn receivedData:(NSData*)data {
+    UIImage* image = [[UIImage alloc] initWithData:data];
+    //NSString* s = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    //NSLog(@"STRING %@",s);
+    NSLog(@"Image %@",image);
+}
+
+- (void)dataBlobConnection:(id<DataBlobConnectionProtocol>)conn didClose:(NSError*)error {
+    
+}
 
 @end
