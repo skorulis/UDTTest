@@ -1,7 +1,7 @@
 //  Created by Alexander Skorulis on 6/04/2015.
 //  Copyright (c) 2015 com.skorulis. All rights reserved.
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 @interface RandomUtil : NSObject
 

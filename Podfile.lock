@@ -1,12 +1,15 @@
 PODS:
+  - CocoaAsyncSocket (7.4.1)
   - Expecta (1.0.0)
   - NSData+Base64 (1.0.0)
 
 DEPENDENCIES:
+  - CocoaAsyncSocket
   - Expecta
   - NSData+Base64
 
 SPEC CHECKSUMS:
+  CocoaAsyncSocket: 7cbf214b27f8e7f7574db6a3fd96352ffaed433d
   Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
   NSData+Base64: 4e84902c4db907a15673474677e57763ef3903e4
 

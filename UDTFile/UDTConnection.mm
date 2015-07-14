@@ -5,6 +5,8 @@
 #import "UDTFileReceive.h"
 #import "UDTConstants.h"
 
+static const int kUDTBufferSize = 65536;
+
 @interface UDTConnection ()
 
 @property UDTFileReceive* recvModel;
@@ -24,10 +26,14 @@
 }
 
 - (void) handleData {
-    char* buffer = new char[kUDTChunkSize];
+    char* buffer = new char[kUDTBufferSize];
     while (![[NSThread currentThread] isCancelled]) {
         @autoreleasepool {
             int rs = UDT::recv(*_recver, buffer, kUDTChunkSize, 0);
+            
+            //int bufferFill; int size;
+            //UDT::getsockopt(*_recver, 0, UDT_RCVDATA, &bufferFill, &size);
+            //NSLog(@"RCV BUFFER %d : %d",bufferFill,size);
             
             if (UDT::ERROR == rs) {
                 NSLog(@"RECV: %s",UDT::getlasterror().getErrorMessage());

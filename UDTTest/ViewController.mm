@@ -50,8 +50,6 @@
     NSData* imageData = UIImageJPEGRepresentation(image, 1);
     NSLog(@"Image %@",image);
     [self.sender sendData:imageData];
-    [self.sender sendData:imageData];
-    //[self.sender sendString:@"TEST A fsagfsodfgdsofg ouegf owgefo gwefougweoufgweou gfwouegfouwgfouewgfouwgfuowg"];
 }
 
 #pragma mark DataBlobConnectionDelegate

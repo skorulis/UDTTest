@@ -46,11 +46,11 @@
     }
     
     _client = UDT::socket(local->ai_family, local->ai_socktype, local->ai_protocol);
-    UDT::setsockopt(_client, 0, UDP_RCVBUF, new int(1590000), sizeof(int));
+    setSocketParams(&_client);
     
     freeaddrinfo(local);
     
-    if (0 != getaddrinfo("192.168.1.3", "8345", &hints, &peer)) {
+    if (0 != getaddrinfo("192.168.1.2", "8345", &hints, &peer)) {
         NSLog(@"incorrect server/peer address");
         return;
     }
@@ -78,6 +78,12 @@
                 send = _sendQueue[0];
             }
             
+            int bufferFill; int size;
+
+            UDT::getsockopt(_client, 0, UDT_SNDDATA, &bufferFill, &size);
+            NSLog(@"SEND BUFFER %d : %d",bufferFill,size);
+            
+            
             NSData* chunk = [send nextChunk:kUDTChunkSize];
             int ss = UDT::send(_client, (char*)chunk.bytes, (int)chunk.length, 0);
             
@@ -92,6 +98,7 @@
                     }
                 }
             }
+            [NSThread sleepForTimeInterval:0.01];
             
         }
     }
@@ -103,6 +110,7 @@
 }
 
 - (void) sendData:(NSData*)data {
+    NSLog(@"Sending data size %d",(int)data.length);
     UDTFileSend* send = [[UDTFileSend alloc] initWithData:data];
     @synchronized(_sendQueue) {
         [_sendQueue addObject:send];
