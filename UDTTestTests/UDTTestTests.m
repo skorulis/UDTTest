@@ -6,6 +6,7 @@
 #import "UDTFileSend.h"
 #import "RandomUtil.h"
 #import "UDTConstants.h"
+#import "UDTFileReceive.h"
 
 @interface UDTTestTests : XCTestCase
 
@@ -32,6 +33,30 @@
     NSData* chunk3 = [send nextChunk:50];
     XCTAssertEqual(chunk3.length, 4);
     XCTAssertEqual(send.isFinished, true);
+}
+
+- (void) testFileReceive1 {
+    NSData* data = [RandomUtil randomData:100];
+    UDTFileSend* send = [[UDTFileSend alloc] initWithData:data];
+    NSData* chunk1 = [send nextChunk:150];
+    
+    UDTFileReceive* recv = [[UDTFileReceive alloc] initWithInitialChunk:chunk1];
+    
+    XCTAssertEqual(recv.isFinished, true);
+    XCTAssertEqualObjects(data, recv.getData);
+}
+
+- (void) testFileReceive2 {
+    NSData* data = [RandomUtil randomData:200];
+    UDTFileSend* send = [[UDTFileSend alloc] initWithData:data];
+    NSData* chunk1 = [send nextChunk:150];
+    
+    UDTFileReceive* recv = [[UDTFileReceive alloc] initWithInitialChunk:chunk1];
+    XCTAssertEqual(recv.isFinished, false);
+    [recv didReceive:[send nextChunk:150]];
+    
+    XCTAssertEqual(recv.isFinished, true);
+    XCTAssertEqualObjects(data, recv.getData);
 }
 
 @end

@@ -34,6 +34,7 @@
 		FA1F5FC01B5489550006452D /* UDTReceiver.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FBB1B5489550006452D /* UDTReceiver.mm */; };
 		FA1F5FC11B5489550006452D /* UDTSender.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FBD1B5489550006452D /* UDTSender.mm */; };
 		FA1F5FC41B5489D70006452D /* RandomUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FC31B5489D70006452D /* RandomUtil.m */; };
+		FA1F5FC71B54AE480006452D /* UDTFileReceive.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1F5FC61B54AE480006452D /* UDTFileReceive.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,8 @@
 		FA1F5FBD1B5489550006452D /* UDTSender.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UDTSender.mm; sourceTree = "<group>"; };
 		FA1F5FC21B5489D70006452D /* RandomUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomUtil.h; sourceTree = "<group>"; };
 		FA1F5FC31B5489D70006452D /* RandomUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomUtil.m; sourceTree = "<group>"; };
+		FA1F5FC51B54AE480006452D /* UDTFileReceive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDTFileReceive.h; sourceTree = "<group>"; };
+		FA1F5FC61B54AE480006452D /* UDTFileReceive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UDTFileReceive.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +266,8 @@
 				FA1F5FBB1B5489550006452D /* UDTReceiver.mm */,
 				FA1F5FBC1B5489550006452D /* UDTSender.h */,
 				FA1F5FBD1B5489550006452D /* UDTSender.mm */,
+				FA1F5FC51B54AE480006452D /* UDTFileReceive.h */,
+				FA1F5FC61B54AE480006452D /* UDTFileReceive.m */,
 			);
 			path = UDTFile;
 			sourceTree = SOURCE_ROOT;
@@ -453,6 +458,7 @@
 				FA1F5FA71B53C4160006452D /* queue.cpp in Sources */,
 				FA1F5FBE1B5489550006452D /* UDTConstants.m in Sources */,
 				FA1F5FA61B53C4160006452D /* packet.cpp in Sources */,
+				FA1F5FC71B54AE480006452D /* UDTFileReceive.m in Sources */,
 				FA1F5FA21B53C4160006452D /* core.cpp in Sources */,
 				FA1F5F5C1B53C3F60006452D /* main.m in Sources */,
 			);
